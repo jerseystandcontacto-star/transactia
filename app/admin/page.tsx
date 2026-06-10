@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { supabaseAdmin } from '@/lib/supabase/admin';
+import { getSupabaseAdmin } from '@/lib/supabase/admin';
 import LeadsTable from './components/LeadsTable';
 import LogoutButton from './components/LogoutButton';
 
@@ -11,7 +11,7 @@ export default async function AdminPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/admin/login');
 
-  const { data: leads, error } = await supabaseAdmin
+  const { data: leads, error } = await getSupabaseAdmin()
     .from('leads')
     .select('*')
     .order('created_at', { ascending: false });
