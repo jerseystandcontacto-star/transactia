@@ -4,15 +4,17 @@ export const translations = {
       services: 'Servicios',
       why: 'Por qué Transactia',
       contact: 'Contacto',
-      demo: 'Agendar Demo',
+      demo: 'Conoce Nuestra Oferta',
     },
     hero: {
       eyebrow: 'Soluciones de pago — México',
-      headline: 'Toda tu operación de cobros, en un solo lugar.',
+      headline: 'Toda tu operación de cobros, integrada en un solo lugar.',
+      headline_em: 'integrada',
+      value_prop: 'Una sola empresa. Terminales físicas, pagos en línea, SPEI y APIs — todo integrado.',
       subheadline:
         'Terminal POS, pagos en línea, SPEI y APIs de integración para startups, PyMEs y corporativos. Con atención que responde en minutos, no en días.',
-      cta_demo: 'Agendar Demo',
-      cta_contact: 'Contactar',
+      cta_demo: 'Conoce Nuestra Oferta',
+      cta_contact: 'Contáctanos',
       card_label: 'Monto recibido',
       card_status: 'Pago procesado exitosamente',
       stat_uptime: 'Uptime garantizado',
@@ -48,6 +50,11 @@ export const translations = {
         },
       ],
     },
+    providers: {
+      eyebrow: 'Distribuidores Autorizados',
+      title: 'Distribuidores Autorizados',
+      subtitle: 'Somos distribuidores autorizados de las mejores plataformas de pago en México',
+    },
     why: {
       title: 'Por qué elegir Transactia',
       subtitle:
@@ -71,13 +78,19 @@ export const translations = {
           description:
             'Personas reales que entienden tu negocio. Sin bots, sin scripts, sin excusas — solo soluciones cuando las necesitas.',
         },
+        {
+          number: '04',
+          title: 'Solución 100% Integrada',
+          description:
+            'Un solo proveedor para todas tus necesidades de pago. Sin fricciones, sin múltiples contratos, sin complicaciones.',
+        },
       ],
     },
     cta: {
       title: 'Listo para transformar cómo cobras',
       subtitle:
-        'Agenda una demo y descubre por qué las empresas que nos prueban no vuelven a buscar otro proveedor.',
-      button: 'Agendar Demo',
+        'Conoce nuestra oferta y descubre por qué las empresas que nos prueban no vuelven a buscar otro proveedor.',
+      button: 'Conoce Nuestra Oferta',
     },
     contact: {
       title: 'Hablemos',
@@ -92,7 +105,7 @@ export const translations = {
       message: 'Mensaje',
       message_placeholder: '¿En qué podemos ayudarte?',
       send: 'Enviar mensaje',
-      whatsapp: 'Contactar por WhatsApp',
+      whatsapp: 'Contáctanos por WhatsApp',
       whatsapp_sub: 'Respuesta en menos de 5 minutos',
     },
     footer: {
@@ -117,14 +130,16 @@ export const translations = {
       services: 'Services',
       why: 'Why Transactia',
       contact: 'Contact',
-      demo: 'Book a Demo',
+      demo: 'Explore Our Solution',
     },
     hero: {
       eyebrow: 'Payment solutions — Mexico',
-      headline: 'Your entire payment operation, in one place.',
+      headline: 'Your entire payment operation, integrated in one place.',
+      headline_em: 'integrated',
+      value_prop: 'One company. POS terminals, online payments, SPEI and APIs — all integrated.',
       subheadline:
         'POS terminals, online payments, SPEI transfers, and integration APIs for startups, SMEs, and corporations. With support that responds in minutes, not days.',
-      cta_demo: 'Book a Demo',
+      cta_demo: 'Explore Our Solution',
       cta_contact: 'Contact Us',
       card_label: 'Amount received',
       card_status: 'Payment successfully processed',
@@ -161,6 +176,11 @@ export const translations = {
         },
       ],
     },
+    providers: {
+      eyebrow: 'Authorized Distributors',
+      title: 'Authorized Distributors',
+      subtitle: 'We are authorized distributors of the leading payment platforms in Mexico',
+    },
     why: {
       title: 'Why choose Transactia',
       subtitle:
@@ -184,13 +204,19 @@ export const translations = {
           description:
             'Real people who understand your business. No bots, no scripts, no excuses — just solutions when you need them.',
         },
+        {
+          number: '04',
+          title: '100% Integrated Solution',
+          description:
+            'One provider for all your payment needs. No friction, no multiple contracts, no complications.',
+        },
       ],
     },
     cta: {
       title: 'Ready to transform how you collect payments',
       subtitle:
-        'Book a demo and discover why companies that try us never look for another provider.',
-      button: 'Book a Demo',
+        'Explore our solution and discover why companies that try us never look for another provider.',
+      button: 'Explore Our Solution',
     },
     contact: {
       title: "Let's talk",
@@ -205,7 +231,7 @@ export const translations = {
       message: 'Message',
       message_placeholder: 'How can we help you?',
       send: 'Send message',
-      whatsapp: 'Contact via WhatsApp',
+      whatsapp: 'Contact us on WhatsApp',
       whatsapp_sub: 'Response in under 5 minutes',
     },
     footer: {

@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import LogosStrip from '@/components/LogosStrip';
 import Services from '@/components/Services';
+import Providers from '@/components/Providers';
 import WhyTransactia from '@/components/WhyTransactia';
 import DarkCTA from '@/components/DarkCTA';
 import Contact from '@/components/Contact';
@@ -15,6 +16,7 @@ export default function Home() {
         <Hero />
         <LogosStrip />
         <Services />
+        <Providers />
         <WhyTransactia />
         <DarkCTA />
         <Contact />

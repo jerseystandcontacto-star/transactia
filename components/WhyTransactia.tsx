@@ -17,7 +17,7 @@ export default function WhyTransactia() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-px bg-ash/20">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-ash/20">
           {t.why.items.map((item, i) => (
             <div key={i} className="bg-silk p-10">
               <p className="font-serif text-6xl text-ash/40 leading-none mb-8 select-none">

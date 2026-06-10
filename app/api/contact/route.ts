@@ -1,13 +1,14 @@
-import { google } from 'googleapis';
+import { Resend } from 'resend';
 import { NextRequest } from 'next/server';
+import { supabaseAdmin } from '@/lib/supabase/admin';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
-  // 1. Parse body
   let body: { name?: string; company?: string; email?: string; phone?: string; message?: string };
   try {
     body = await req.json();
-  } catch (err) {
-    console.error('[contact] Failed to parse request body:', err);
+  } catch {
     return Response.json({ error: 'Invalid JSON body.' }, { status: 400 });
   }
 
@@ -17,51 +18,43 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: 'Faltan campos requeridos.' }, { status: 400 });
   }
 
-  // 2. Check env vars
-  const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
-  const serviceEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
-  const privateKeyRaw = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY;
+  // 1. Save lead to Supabase
+  const { error: dbError } = await supabaseAdmin.from('leads').insert({
+    name,
+    company: company ?? null,
+    email,
+    phone: phone ?? null,
+    message,
+    status: 'Nuevo',
+  });
 
-  console.log('[contact] env check → spreadsheetId:', spreadsheetId ? 'ok' : 'MISSING');
-  console.log('[contact] env check → serviceEmail:', serviceEmail ?? 'MISSING');
-  console.log('[contact] env check → privateKey starts with:', privateKeyRaw?.slice(0, 40) ?? 'MISSING');
-
-  if (!spreadsheetId || !serviceEmail || !privateKeyRaw) {
-    return Response.json({ error: 'Configuración del servidor incompleta.' }, { status: 500 });
+  if (dbError) {
+    console.error('[contact] Supabase insert error:', dbError.message);
+    return Response.json({ error: 'Error al guardar el mensaje.' }, { status: 500 });
   }
 
-  const privateKey = privateKeyRaw.replace(/\\n/g, '\n');
-
-  // 3. Auth + append
-  try {
-    const auth = new google.auth.GoogleAuth({
-      credentials: {
-        client_email: serviceEmail,
-        private_key: privateKey,
-      },
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-    });
-
-    const sheets = google.sheets({ version: 'v4', auth });
-    const timestamp = new Date().toLocaleString('es-MX', { timeZone: 'America/Mexico_City' });
-
-    const appendRes = await sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range: 'Sheet1!A:F',
-      valueInputOption: 'USER_ENTERED',
-      requestBody: {
-        values: [[timestamp, name, company ?? '', email, phone ?? '', message]],
-      },
-    });
-
-    console.log('[contact] Sheets append status:', appendRes.status, appendRes.data.updates);
-    return Response.json({ success: true });
-  } catch (err: unknown) {
-    const gErr = err as { code?: number; message?: string; errors?: unknown };
-    console.error('[contact] Sheets API error — code:', gErr?.code, '| message:', gErr?.message, '| details:', JSON.stringify(gErr?.errors));
-    return Response.json(
-      { error: 'Error al guardar el mensaje.', detail: gErr?.message },
-      { status: 500 },
-    );
+  // 2. Send email notification (non-blocking — Supabase is the source of truth)
+  if (process.env.RESEND_API_KEY) {
+    try {
+      await resend.emails.send({
+        from: 'Transactia Web <onboarding@resend.dev>',
+        to: 'contacto@transactia.net',
+        subject: `Nuevo lead: ${name}${company ? ` — ${company}` : ''}`,
+        text: [
+          `Nombre:   ${name}`,
+          `Empresa:  ${company || '—'}`,
+          `Email:    ${email}`,
+          `Teléfono: ${phone || '—'}`,
+          ``,
+          `Mensaje:`,
+          message,
+        ].join('\n'),
+      });
+    } catch (emailErr) {
+      // Log but don't fail — lead is already saved
+      console.error('[contact] Resend error:', emailErr);
+    }
   }
+
+  return Response.json({ success: true });
 }

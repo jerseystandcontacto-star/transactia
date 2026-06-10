@@ -5,8 +5,8 @@ export default function Logo({ inverted = false }: { inverted?: boolean }) {
     <Image
       src="/logo.png"
       alt="Transactia"
-      width={140}
-      height={36}
+      width={180}
+      height={46}
       style={inverted ? { filter: 'invert(1)' } : undefined}
       priority
     />
